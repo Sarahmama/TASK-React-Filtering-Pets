@@ -1,9 +1,22 @@
+import { useState } from "react";
 import pets from "../petsData";
 import PetItem from "./PetItem";
+import PetSearch from "./PetSearch";
+import PetSelector from "./PetSelector";
 
 function PetsList() {
-  const petList = pets.map((pet) => <PetItem pet={pet} key={pet.id} />);
+  const [petsState,setpetsState] = useState(pets)
+  const [query,setQuery] = useState("");
+  const [type,setType] =useState("");
 
+// const handleAdopt =(petId)=> {
+//   petsState.filter((pet) =>(pet.id.splice(pet.id,1)) )
+ 
+// };
+
+  const petList = petsState.filter((pet)=>(pet.name.toLowerCase().includes(query))&&pet.type.includes(type)).map((pet) => <PetItem pet={pet} key={pet.id} />);
+const petSearch = (e)=>(setQuery(e.target.value.toLowerCase()));
+const petSelector =(e)=>(setType(e.target.value));
   return (
     <section id="doctors" className="doctor-section pt-140">
       <div className="container">
@@ -13,25 +26,10 @@ function PetsList() {
               <h1 className="mb-25 wow fadeInUp" data-wow-delay=".2s">
                 Fur-ends
               </h1>
-              <div className="input-group rounded">
-                <input
-                  type="search"
-                  className="form-control rounded"
-                  placeholder="Search"
-                  aria-label="Search"
-                  aria-describedby="search-addon"
-                />
-              </div>
+        <PetSearch petSearch={petSearch}/>
               <br />
               Type:
-              <select className="form-select">
-                <option value="" selected>
-                  All
-                </option>
-                <option value="Cat">Cat</option>
-                <option value="Dog">Dog</option>
-                <option value="Rabbit">Rabbit</option>
-              </select>
+             <PetSelector petSelector={petSelector}/>
             </div>
           </div>
         </div>
