@@ -9,12 +9,14 @@ function PetsList() {
   const [query,setQuery] = useState("");
   const [type,setType] =useState("");
 
-// const handleAdopt =(petId)=> {
-//   petsState.filter((pet) =>(pet.id.splice(pet.id,1)) )
+const handleAdopt =(petId)=> {
+  console.log("first")
  
-// };
 
-  const petList = petsState.filter((pet)=>(pet.name.toLowerCase().includes(query))&&pet.type.includes(type)).map((pet) => <PetItem pet={pet} key={pet.id} />);
+ setpetsState( petsState.filter(pet=>pet.id!==petId));
+};
+
+  const petList = petsState.filter((pet)=>(pet.name.toLowerCase().includes(query))&&pet.type.includes(type)).map((pet) => <PetItem pet={pet} key={pet.id} handleAdopt={()=>handleAdopt(pet.id)} />);
 const petSearch = (e)=>(setQuery(e.target.value.toLowerCase()));
 const petSelector =(e)=>(setType(e.target.value));
   return (
